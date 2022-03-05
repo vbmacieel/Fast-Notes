@@ -1,13 +1,17 @@
 package com.example.fastnotes
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fastnotes.adapter.NoteRecyclerViewAdapter
+import com.example.fastnotes.db.NotesDbHelper
+import com.example.fastnotes.model.Note
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var notesDbHelper: NotesDbHelper
+
     private lateinit var rvLayout: RecyclerView
     private lateinit var rvAdapter: NoteRecyclerViewAdapter
     private lateinit var fabNewNote: FloatingActionButton
@@ -25,9 +29,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerView() {
-        rvAdapter = NoteRecyclerViewAdapter(this, mutableListOf())
+        rvAdapter = NoteRecyclerViewAdapter(this, getNotes())
         rvLayout.layoutManager = LinearLayoutManager(this)
         rvLayout.adapter = rvAdapter
+    }
+
+    private fun getNotes(): MutableList<Note> {
+        notesDbHelper = NotesDbHelper(this)
+        return notesDbHelper.getAllNotes()
     }
 
     private fun setUi() {

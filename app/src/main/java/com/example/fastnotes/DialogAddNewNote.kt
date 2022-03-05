@@ -36,7 +36,7 @@ class DialogAddNewNote: DialogFragment() {
                 addNote()
             }
             .setNegativeButton(DIALOG_NEGATIVE_BTN) { dialogInterface, i ->
-                TODO("Ação de remover o dialog")
+                dialogInterface.dismiss()
             }
         return builder.create()
     }
