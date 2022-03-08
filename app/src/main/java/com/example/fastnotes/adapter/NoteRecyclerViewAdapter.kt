@@ -10,14 +10,9 @@ import com.example.fastnotes.R
 import com.example.fastnotes.model.Note
 
 class NoteRecyclerViewAdapter(
-    private val context: Context,
-    private var notesList: MutableList<Note> = mutableListOf()):
+    private val notesList: MutableList<Note> = mutableListOf(),
+    private val listener: OnItemClickListener):
     RecyclerView.Adapter<NoteRecyclerViewAdapter.NoteViewHolder>() {
-
-    inner class NoteViewHolder(itemview: View): RecyclerView.ViewHolder(itemview) {
-        val rvNoteTitle: TextView = itemview.findViewById(R.id.note_title)
-        val rvNoteDescription: TextView = itemview.findViewById(R.id.note_description)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder =
         NoteViewHolder(LayoutInflater.from(parent.context)
@@ -32,4 +27,20 @@ class NoteRecyclerViewAdapter(
     }
 
     override fun getItemCount(): Int = notesList.size
+
+    inner class NoteViewHolder(itemview: View): RecyclerView.ViewHolder(itemview), View.OnClickListener {
+        val rvNoteTitle: TextView = itemview.findViewById(R.id.note_title)
+        val rvNoteDescription: TextView = itemview.findViewById(R.id.note_description)
+
+        override fun onClick(p0: View?) {
+            val position: Int = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(position)
+            }
+        }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
 }

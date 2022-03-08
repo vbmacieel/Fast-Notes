@@ -6,6 +6,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19814814814814816" />
         <entry key="app/src/main/res/layout/dialog_add_note_layout.xml" value="0.25" />
         <entry key="app/src/main/res/layout/note_layout.xml" value="0.287962962962963" />
+        <entry key="app/src/main/res/layout/notes_form_fragment.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/notes_fragment.xml" value="0.19375" />
       </map>
     </option>
   </component>
