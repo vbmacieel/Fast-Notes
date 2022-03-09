@@ -24,20 +24,14 @@ class NoteRecyclerViewAdapter(
             rvNoteTitle.text = note.title
             rvNoteDescription.text = note.description
         }
+        holder.itemView.setOnClickListener { listener.onItemClick(position) }
     }
 
     override fun getItemCount(): Int = notesList.size
 
-    inner class NoteViewHolder(itemview: View): RecyclerView.ViewHolder(itemview), View.OnClickListener {
+    inner class NoteViewHolder(itemview: View): RecyclerView.ViewHolder(itemview) {
         val rvNoteTitle: TextView = itemview.findViewById(R.id.note_title)
         val rvNoteDescription: TextView = itemview.findViewById(R.id.note_description)
-
-        override fun onClick(p0: View?) {
-            val position: Int = adapterPosition
-            if (position != RecyclerView.NO_POSITION) {
-                listener.onItemClick(position)
-            }
-        }
     }
 
     interface OnItemClickListener {

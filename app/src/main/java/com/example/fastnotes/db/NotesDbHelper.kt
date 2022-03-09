@@ -77,4 +77,22 @@ class NotesDbHelper(context: Context):
         }
         return notesList
     }
+
+    fun updateNote(note: Note) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_ID, note.id)
+        contentValues.put(COLUMN_TITLE, note.title)
+        contentValues.put(COLUMN_DESCRIPTION, note.description)
+        db.update(TABLE_NAME, contentValues, "$COLUMN_ID = ${note.id}", null)
+        db.close()
+    }
+
+    fun deleteNote(id: Long) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put(COLUMN_ID, id)
+        db.delete(TABLE_NAME, "$COLUMN_ID = $id", null)
+        db.close()
+    }
 }

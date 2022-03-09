@@ -10,14 +10,15 @@ import androidx.fragment.app.DialogFragment
 import com.example.fastnotes.db.NotesDbHelper
 import com.example.fastnotes.model.Note
 
-class NoteOptionsDialog: DialogFragment() {
+class NoteOptionsDialog(id: Long): DialogFragment() {
 
     private lateinit var notesDbHelper: NotesDbHelper
+    private var noteId = id;
 
     companion object {
-        const val DIALOG_TITLE = "Nova nota :D"
-        const val DIALOG_POSITIVE_BTN = "Criar nota"
-        const val DIALOG_NEGATIVE_BTN = "Voltar"
+        const val DIALOG_TITLE = "Apagar nota ??"
+        const val DIALOG_POSITIVE_BTN = "Apagar"
+        const val DIALOG_NEGATIVE_BTN = "Cancelar"
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -26,7 +27,7 @@ class NoteOptionsDialog: DialogFragment() {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle(DIALOG_TITLE)
             .setPositiveButton(DIALOG_POSITIVE_BTN) { dialogInterface, i ->
-                dialogInterface.dismiss()
+                notesDbHelper.deleteNote(noteId)
             }
             .setNegativeButton(DIALOG_NEGATIVE_BTN) { dialogInterface, i ->
                 dialogInterface.dismiss()

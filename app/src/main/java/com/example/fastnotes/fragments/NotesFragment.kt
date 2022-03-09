@@ -4,9 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fastnotes.NoteOptionsDialog
 import com.example.fastnotes.R
 import com.example.fastnotes.adapter.NoteRecyclerViewAdapter
 import com.example.fastnotes.db.NotesDbHelper
@@ -47,7 +50,9 @@ class NotesFragment: Fragment(), NoteRecyclerViewAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
+        val noteId = getNotes()[position].id
+        val noteDialog = NoteOptionsDialog(noteId)
+        noteDialog.show(parentFragmentManager, "notesDialogOptions")
     }
 
     private fun getNotes(): MutableList<Note> {
