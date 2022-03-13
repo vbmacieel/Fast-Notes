@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fastnotes.NoteOptionsDialog
+import com.example.fastnotes.NoteOptionsDeleteDialog
 import com.example.fastnotes.R
 import com.example.fastnotes.adapter.NoteRecyclerViewAdapter
 import com.example.fastnotes.db.NotesDbHelper
@@ -34,13 +32,16 @@ class NotesFragment: Fragment(), NoteRecyclerViewAdapter.OnItemClickListener {
         setUi(view)
         setRecyclerView(view)
         fabNewNote.setOnClickListener {
-            notesFormFragment = NoteFormFragment()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.fl_fragment, notesFormFragment)
-                .commit()
+            goToNoteFormFragment()
         }
-
         return view
+    }
+
+    private fun goToNoteFormFragment() {
+        notesFormFragment = NoteFormFragment()
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.fl_fragment, notesFormFragment)
+            .commit()
     }
 
     private fun setRecyclerView(view: View) {
@@ -51,8 +52,20 @@ class NotesFragment: Fragment(), NoteRecyclerViewAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         val noteId = getNotes()[position].id
-        val noteDialog = NoteOptionsDialog(noteId)
+        val noteDialog = NoteOptionsDeleteDialog(noteId)
         noteDialog.show(parentFragmentManager, "notesDialogOptions")
+    }
+
+    override fun onLongClick(position: Int): Boolean {
+        val thisNote = getNotes()[position]
+        val noteFormFragment = NoteFormFragment()
+        val bundle = Bundle()
+        bundle.putString("noteId", thisNote.id.toString())
+        bundle.putString("noteTitle", thisNote.title)
+        bundle.putString("noteDescription", thisNote.description)
+        noteFormFragment.arguments = bundle
+        goToNoteFormFragment()
+        return true
     }
 
     private fun getNotes(): MutableList<Note> {

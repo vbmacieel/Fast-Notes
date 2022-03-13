@@ -1,6 +1,5 @@
 package com.example.fastnotes.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ class NoteRecyclerViewAdapter(
             rvNoteDescription.text = note.description
         }
         holder.itemView.setOnClickListener { listener.onItemClick(position) }
+        holder.itemView.setOnLongClickListener { listener.onLongClick(position) }
     }
 
     override fun getItemCount(): Int = notesList.size
@@ -36,5 +36,6 @@ class NoteRecyclerViewAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+        fun onLongClick(position: Int): Boolean
     }
 }

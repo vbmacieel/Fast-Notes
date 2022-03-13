@@ -29,7 +29,12 @@ class NoteFormFragment: Fragment() {
         val view = inflater.inflate(R.layout.notes_form_fragment, container, false)
         setUi(view)
         btnCreateNewNote()
+        updateNote()
         return view
+    }
+
+    private fun updateNote() {
+        TODO("Not yet implemented")
     }
 
     private fun btnCreateNewNote() {
